@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:orientation="vertical"
+    android:background="@color/background"
+    android:animateLayoutChanges="true"
+    tools:context=".models.registration.RegistrationActivity">
+
+
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/logo" />
+
+    <TextView
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:text="Welcome back..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/registration_edit_text_username"
+        android:layout_marginTop="150dp"
+        android:textColorHint="#9e9e9e"
+        android:hint="Email or Username"
+        android:paddingStart="8dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:drawableStart="@drawable/ic_baseline_person"
+        android:background="@drawable/border_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"/>
+
+
+    <EditText
+        android:id="@+id/registration_edit_text_password"
+        android:layout_marginTop="16dp"
+        android:textColorHint="#9e9e9e"
+        android:hint="Password"
+        android:paddingStart="8dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:drawableStart="@drawable/ic_baseline_lock"
+        android:background="@drawable/border_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"/>
+
+    <EditText
+        android:id="@+id/registration_edit_text_confirm_password"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        android:textColorHint="#9e9e9e"
+        android:hint="Confirm Password"
+        android:paddingStart="8dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:drawableStart="@drawable/ic_baseline_lock"
+        android:background="@drawable/border_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"/>
+
+
+    <android.widget.Button
+        android:id="@+id/registration_button_login"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/background"
+        android:text="Login"
+        android:elevation="10dp"
+        android:textAllCaps="false"
+        android:background="@drawable/button_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <android.widget.Button
+        android:id="@+id/registration_button_sign_up"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"
+        android:text="SignUp"
+        android:background="@drawable/background_button_border"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+
+
+</LinearLayout>
