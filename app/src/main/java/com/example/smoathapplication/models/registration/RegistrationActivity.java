@@ -2,13 +2,18 @@ package com.example.smoathapplication.models.registration;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.example.smoathapplication.R;
+import com.example.smoathapplication.models.home.HomeActivity;
+
+import io.paperdb.Paper;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -31,6 +36,7 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
         registrationEditTextUsername = findViewById(R.id.registration_edit_text_username);
         registrationEditTextPassword = findViewById(R.id.registration_edit_text_password);
         registrationEditTextConfirmPassword = findViewById(R.id.registration_edit_text_confirm_password);
@@ -58,31 +64,63 @@ public class RegistrationActivity extends AppCompatActivity {
         registrationButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean allowToRegister = true;
+
                 username = registrationEditTextUsername.getText().toString();
                 password = registrationEditTextPassword.getText().toString();
                 confirmPassword = registrationEditTextConfirmPassword.getText().toString();
 
-                if (username.equals("") || username.isEmpty())
+                if (username.equals("") || username.isEmpty()) {
+                    allowToRegister = false;
                     registrationEditTextUsername.setError("you should fill this field");
+                }
 
-                if (password.equals("") || password.isEmpty())
-                    registrationEditTextUsername.setError("you should fill this field");
+                if (password.equals("") || password.isEmpty()) {
+                    allowToRegister = false;
+                    registrationEditTextPassword.setError("you should fill this field");
+                }
 
-                if ((confirmPassword.equals("") || confirmPassword.isEmpty()) && registrationButtonLogin.getText().toString().equals("Register"))
-                    registrationEditTextUsername.setError("you should fill this field");
-
-                if (password.length() < 6)
+                if (password.length() < 6 && !password.equals("")) {
                     registrationEditTextPassword.setError("you password should be more then 6");
+                    allowToRegister = false;
 
-                if ((password != confirmPassword) && registrationButtonLogin.getText().toString().equals("Register"))
+                }
+
+                if ((confirmPassword.equals("") || confirmPassword.isEmpty()) && registrationButtonLogin.getText().toString().equals("Register")) {
+                    registrationEditTextUsername.setError("you should fill this field");
+                    allowToRegister = false;
+                }
+
+
+
+                if ((!password.equals(confirmPassword)) && registrationButtonLogin.getText().toString().equals("Register")) {
+                    allowToRegister = false;
                     registrationEditTextPassword.setError("your password doesn't match");
+                }
 
-
-
-                if (registrationButtonLogin.getText().toString().equals("Register")) {
+                if (allowToRegister) {
+                    if (registrationButtonLogin.getText().toString().equals("Register")) {
+                        UserModel userModel = new UserModel(username, password);
+                        Paper.book().write("USER", userModel);
+                        MoveToHome();
                     } else {
+                        UserModel userModel = Paper.book().read("USER", new UserModel("",""));
+                        if (userModel.getUsername().equals(username) && userModel.getPassword().equals(password)) {
+                            MoveToHome();
+                        } else
+                            Toast.makeText(RegistrationActivity.this, "your username is not exist please register :) ", Toast.LENGTH_SHORT).show();
                     }
+                }
+
             }
         });
     }
+
+    //region Methods
+    private void MoveToHome() {
+        Intent intent = new Intent(RegistrationActivity.this, HomeActivity.class);
+        RegistrationActivity.this.startActivity(intent);
+
+    }
+    //endregion
 }
