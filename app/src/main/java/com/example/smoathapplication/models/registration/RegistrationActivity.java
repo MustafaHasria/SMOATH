@@ -13,6 +13,9 @@ import android.widget.Toast;
 import com.example.smoathapplication.R;
 import com.example.smoathapplication.models.home.HomeActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.paperdb.Paper;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -29,6 +32,7 @@ public class RegistrationActivity extends AppCompatActivity {
     String username;
     String password;
     String confirmPassword;
+    List<UserModel> userModelList;
     //endregion
 
 
@@ -92,7 +96,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
 
 
-
                 if ((!password.equals(confirmPassword)) && registrationButtonLogin.getText().toString().equals("Register")) {
                     allowToRegister = false;
                     registrationEditTextPassword.setError("your password doesn't match");
@@ -100,15 +103,29 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 if (allowToRegister) {
                     if (registrationButtonLogin.getText().toString().equals("Register")) {
+                        userModelList = Paper.book().read("USERS", new ArrayList<>());
+                        if (userModelList.size() != 0)
+                            for (int i = 0; i < userModelList.size(); i++) {
+                                if (username.equals(userModelList.get(i).getUsername())) {
+                                    Toast.makeText(RegistrationActivity.this, "the user:" + username + "is exited before.", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
                         UserModel userModel = new UserModel(username, password);
+                        userModelList.add(userModel);
+                        Paper.book().write("USERS", userModelList);
                         Paper.book().write("USER", userModel);
                         MoveToHome();
                     } else {
-                        UserModel userModel = Paper.book().read("USER", new UserModel("",""));
-                        if (userModel.getUsername().equals(username) && userModel.getPassword().equals(password)) {
-                            MoveToHome();
-                        } else
-                            Toast.makeText(RegistrationActivity.this, "your username is not exist please register :) ", Toast.LENGTH_SHORT).show();
+                        userModelList = Paper.book().read("USERS", new ArrayList<>());
+                        for (int i = 0; i < userModelList.size(); i++) {
+                            if (userModelList.get(i).getUsername().equals(username) && userModelList.get(i).getPassword().equals(password)) {
+                                Paper.book().write("USER", userModelList.get(i));
+                                MoveToHome();
+                                return;
+                            }
+                        }
+                        Toast.makeText(RegistrationActivity.this, "this user not existed please register", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -120,7 +137,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private void MoveToHome() {
         Intent intent = new Intent(RegistrationActivity.this, HomeActivity.class);
         RegistrationActivity.this.startActivity(intent);
-
     }
     //endregion
 }

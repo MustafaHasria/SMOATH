@@ -15,16 +15,20 @@ import io.paperdb.Paper;
 
 public class SplashActivity extends AppCompatActivity {
 
+    //region Variables
+    UserModel userModel;
+    //endregion
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         Paper.init(this);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                UserModel userModel = Paper.book().read("USER");
+                userModel = Paper.book().read("USER");
                 if (userModel == null) {
                     Intent intent = new Intent(SplashActivity.this, RegistrationActivity.class);
                     SplashActivity.this.startActivity(intent);
