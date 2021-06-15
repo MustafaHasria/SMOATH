@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/offer_list_item_card_main_container"
     android:layout_width="match_parent"
     android:layout_height="175dp"
     android:layout_margin="8dp"
     app:cardCornerRadius="16dp"
-    app:cardElevation="16dp">
+    app:cardElevation="2.5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-
+            android:id="@+id/offer_list_item_image_view_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@color/background" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_poster" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:alpha="0.8"
+            android:src="@drawable/background_overlay"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,6 +35,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
+                android:id="@+id/offer_list_item_text_name"
                 style="@style/text_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,6 +48,7 @@
                 android:weightSum="3">
 
                 <TextView
+                    android:id="@+id/offer_list_item_text_category"
                     style="@style/text_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -44,18 +57,20 @@
                     android:text="Action" />
 
                 <TextView
+                    android:id="@+id/offer_list_item_text_duration"
                     style="@style/text_style"
                     android:layout_width="0dp"
-                    android:text="duration: 2:15"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="duration: 2:15" />
 
                 <TextView
-                    android:text="Rating: 5"
+                    android:id="@+id/offer_list_item_text_rating"
                     style="@style/text_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="Rating: 5" />
 
             </LinearLayout>
 
