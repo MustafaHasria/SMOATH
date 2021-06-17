@@ -10,10 +10,21 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smoathapplication.R;
+import com.example.smoathapplication.models.home.model.OfferModel;
+
+import java.util.List;
 
 public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapterViewHolder> {
 
     //region Variables
+    List<OfferModel> offerModelList;
+    //endregion
+
+    //region Constructor
+
+    public OfferAdapter(List<OfferModel> offerModelList) {
+        this.offerModelList = offerModelList;
+    }
 
     //endregion
 

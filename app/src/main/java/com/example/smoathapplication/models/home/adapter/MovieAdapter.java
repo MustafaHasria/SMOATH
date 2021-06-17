@@ -1,5 +1,6 @@
 package com.example.smoathapplication.models.home.adapter;
 
+import android.graphics.Movie;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,21 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smoathapplication.R;
+import com.example.smoathapplication.models.home.model.MovieModel;
+
+import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
     //region Variables
+    List<MovieModel> movieModelList;
+    //endregion
+
+    //region Constructor
+
+    public MovieAdapter(List<MovieModel> movieModelList) {
+        this.movieModelList = movieModelList;
+    }
 
     //endregion
 

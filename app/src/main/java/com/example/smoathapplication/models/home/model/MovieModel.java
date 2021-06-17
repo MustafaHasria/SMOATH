@@ -2,7 +2,7 @@ package com.example.smoathapplication.models.home.model;
 
 import android.graphics.drawable.Drawable;
 
-public class OfferModel {
+public class MovieModel {
 
     //region Property
     private String image;
@@ -13,7 +13,7 @@ public class OfferModel {
 
     //region Constructor
 
-    public OfferModel(String image, String name, String duration, float rating) {
+    public MovieModel(String image, String name, String duration, float rating) {
         this.image = image;
         this.name = name;
         this.duration = duration;

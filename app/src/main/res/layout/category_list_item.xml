@@ -17,6 +17,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/category_list_item_text_category"
             android:layout_weight="9"
             android:text="name category"
             style="@style/text_style_head"
