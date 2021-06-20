@@ -9,17 +9,36 @@
     tools:context=".models.addmovie.AddMovieActivity">
 
     <ImageView
+        android:id="@+id/add_movie_image_view_image"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
     <EditText
+        android:id="@+id/add_movie_edit_text_name"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/border_edit_text"
         android:drawableStart="@drawable/ic_baseline_person"
         android:drawablePadding="10dp"
-        android:hint="Name"
+        android:hint="@string/name"
+        android:maxLines="1"
+        android:paddingStart="8dp"
+        android:paddingEnd="0dp"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textColorHint="#9e9e9e" />
+
+    <EditText
+        android:id="@+id/add_movie_edit_text_category"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/border_edit_text"
+        android:drawableStart="@drawable/ic_baseline_person"
+        android:drawablePadding="10dp"
+        android:hint="@string/category"
         android:maxLines="1"
         android:paddingStart="8dp"
         android:singleLine="true"
@@ -27,20 +46,7 @@
         android:textColorHint="#9e9e9e" />
 
     <EditText
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/border_edit_text"
-        android:drawableStart="@drawable/ic_baseline_person"
-        android:drawablePadding="10dp"
-        android:hint="Category"
-        android:maxLines="1"
-        android:paddingStart="8dp"
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textColorHint="#9e9e9e" />
-
-    <EditText
+        android:id="@+id/add_movie_edit_text_rating"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -55,6 +61,7 @@
         android:textColorHint="#9e9e9e" />
 
     <EditText
+        android:id="@+id/add_movie_edit_text_duration"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -69,7 +76,7 @@
         android:textColorHint="#9e9e9e" />
 
     <android.widget.Button
-        android:id="@+id/registration_button_login"
+        android:id="@+id/add_movie_button_add"
         android:layout_marginTop="20dp"
         android:textColor="@color/background"
         android:text="Add"

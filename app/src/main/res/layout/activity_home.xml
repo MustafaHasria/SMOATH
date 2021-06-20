@@ -75,4 +75,15 @@
         app:layout_constraintTop_toBottomOf="@+id/home_recycler_offer"
         tools:listitem="@layout/category_list_item" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/home_floating_action_button_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_baseline_add"
+        android:backgroundTint="@color/accent"
+        android:layout_marginEnd="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

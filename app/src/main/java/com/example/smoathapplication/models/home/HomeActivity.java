@@ -4,15 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.smoathapplication.R;
+import com.example.smoathapplication.models.addmovie.AddMovieActivity;
 import com.example.smoathapplication.models.home.adapter.CategoryAdapter;
 import com.example.smoathapplication.models.home.adapter.MovieAdapter;
 import com.example.smoathapplication.models.home.adapter.OfferAdapter;
 import com.example.smoathapplication.models.home.model.CategoryMovieModel;
 import com.example.smoathapplication.models.home.model.MovieModel;
 import com.example.smoathapplication.models.home.model.OfferModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
     //region Components
     RecyclerView homeRecyclerOffer;
     RecyclerView homeRecyclerCategory;
+    FloatingActionButton homeFloatingActionButtonAdd;
     //endregion
 
     //region Variables
@@ -42,9 +47,17 @@ public class HomeActivity extends AppCompatActivity {
 
         homeRecyclerOffer = findViewById(R.id.home_recycler_offer);
         homeRecyclerCategory = findViewById(R.id.home_recycler_category);
+        homeFloatingActionButtonAdd = findViewById(R.id.home_floating_action_button_add);
+
         offerModelList = Paper.book().read("OFFER_LIST", new ArrayList<>());
         categoryMovieModelList = Paper.book().read("CATEGORY_MODEL_LIST", new ArrayList<>());
 
+        homeFloatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, AddMovieActivity.class));
+            }
+        });
         setupOfferRecyclerView();
         setupCategoryRecyclerView();
     }
