@@ -1,8 +1,12 @@
 package com.example.smoathapplication.models.home.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,19 +14,19 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smoathapplication.R;
-import com.example.smoathapplication.models.home.model.OfferModel;
+import com.example.smoathapplication.models.home.model.MovieModel;
 
 import java.util.List;
 
 public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapterViewHolder> {
 
     //region Variables
-    List<OfferModel> offerModelList;
+    List<MovieModel> offerModelList;
     //endregion
 
     //region Constructor
 
-    public OfferAdapter(List<OfferModel> offerModelList) {
+    public OfferAdapter(List<MovieModel> offerModelList) {
         this.offerModelList = offerModelList;
     }
 
@@ -36,13 +40,34 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OfferAdapterViewHolder offerAdapterViewHolder, int i) {
-
+    public void onBindViewHolder(@NonNull OfferAdapterViewHolder offerAdapterViewHolder, int position) {
+        offerAdapterViewHolder.offerListItemTextName.setText(offerModelList.get(position).getName());
+        offerAdapterViewHolder.offerListItemTextCategory.setText(offerModelList.get(position).getCategory());
+        offerAdapterViewHolder.offerListItemTextDuration.setText(offerModelList.get(position).getDuration());
+        offerAdapterViewHolder.offerListItemTextRating.setText(String.valueOf(offerModelList.get(position).getRating()));
+        offerAdapterViewHolder.offerListItemImageViewImage.setImageBitmap(StringToBitMap(offerModelList.get(position).getImage()));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return offerModelList.size();
+    }
+
+    public void updateList(List<MovieModel> offerModelList){
+        this.offerModelList.clear();
+        this.offerModelList = offerModelList;
+        notifyDataSetChanged();
+    }
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
 
@@ -55,6 +80,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapter
         TextView offerListItemTextCategory;
         TextView offerListItemTextDuration;
         TextView offerListItemTextRating;
+        ImageView offerListItemImageViewImage;
         //endregion
 
         public OfferAdapterViewHolder(@NonNull View itemView) {
@@ -64,6 +90,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapter
             offerListItemTextName = itemView.findViewById(R.id.offer_list_item_text_name);
             offerListItemTextDuration = itemView.findViewById(R.id.offer_list_item_text_duration);
             offerListItemTextRating = itemView.findViewById(R.id.offer_list_item_text_rating);
+            offerListItemImageViewImage = itemView.findViewById(R.id.offer_list_item_image_view_image);
         }
     }
     //endregion

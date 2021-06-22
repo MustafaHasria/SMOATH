@@ -8,17 +8,20 @@ public class MovieModel {
     private String image;
     private String name;
     private String duration;
+    private String category;
     private float rating;
     //endregion
 
     //region Constructor
 
-    public MovieModel(String image, String name, String duration, float rating) {
+    public MovieModel(String image, String name, String duration, String category, float rating) {
         this.image = image;
         this.name = name;
         this.duration = duration;
+        this.category = category;
         this.rating = rating;
     }
+
 
     //endregion
 
@@ -53,6 +56,18 @@ public class MovieModel {
     }
 
     public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setRating(float rating) {
         this.rating = rating;
     }
 

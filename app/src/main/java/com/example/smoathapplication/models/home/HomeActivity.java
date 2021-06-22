@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.smoathapplication.R;
 import com.example.smoathapplication.models.addmovie.AddMovieActivity;
@@ -29,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
     RecyclerView homeRecyclerOffer;
     RecyclerView homeRecyclerCategory;
     FloatingActionButton homeFloatingActionButtonAdd;
+    ImageView homeImageViewInfo;
     //endregion
 
     //region Variables
@@ -36,10 +38,17 @@ public class HomeActivity extends AppCompatActivity {
     CategoryAdapter categoryAdapter;
     MovieAdapter movieAdapter;
     RecyclerView.LayoutManager layoutManager;
-    List<OfferModel> offerModelList;
+    List<MovieModel> offerModelList;
     List<CategoryMovieModel> categoryMovieModelList;
     //endregion
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        offerAdapter.updateList(Paper.book().read("MOVIES_LIST", new ArrayList<>()));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +57,16 @@ public class HomeActivity extends AppCompatActivity {
         homeRecyclerOffer = findViewById(R.id.home_recycler_offer);
         homeRecyclerCategory = findViewById(R.id.home_recycler_category);
         homeFloatingActionButtonAdd = findViewById(R.id.home_floating_action_button_add);
+        homeImageViewInfo = findViewById(R.id.home_image_view_info);
 
-        offerModelList = Paper.book().read("OFFER_LIST", new ArrayList<>());
+        offerModelList = Paper.book().read("MOVIES_LIST", new ArrayList<>());
         categoryMovieModelList = Paper.book().read("CATEGORY_MODEL_LIST", new ArrayList<>());
+        homeImageViewInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         homeFloatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override

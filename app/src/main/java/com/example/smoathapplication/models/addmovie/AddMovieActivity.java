@@ -7,10 +7,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import com.example.smoathapplication.R;
 import com.example.smoathapplication.models.home.model.MovieModel;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,7 @@ public class AddMovieActivity extends AppCompatActivity {
     Bitmap bitmapImage;
     //endregion
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +71,16 @@ public class AddMovieActivity extends AppCompatActivity {
         addMovieButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieModel movieModel = new MovieModel("fasdfas", addMovieEditTextName.getText().toString(), addMovieEditTextDuration.getText().toString(), Float.parseFloat(addMovieEditTextRating.getText().toString()));
+                MovieModel movieModel = new MovieModel(BitMapToString(bitmapImage), addMovieEditTextName.getText().toString(), addMovieEditTextDuration.getText().toString(), addMovieEditTextCategory.getText().toString(), Float.parseFloat(addMovieEditTextRating.getText().toString()));
                 List<MovieModel> movieModelList = Paper.book().read("MOVIES_LIST", new ArrayList<>());
                 movieModelList.add(movieModel);
-                Paper.book().write("MOVIE_LIST", movieModelList);
+                Paper.book().write("MOVIES_LIST", movieModelList);
+                Toast.makeText(AddMovieActivity.this, "the movie " + movieModel.getName() + " added." , Toast.LENGTH_SHORT).show();
+                addMovieEditTextName.setText("");
+                addMovieEditTextCategory.setText("");
+                addMovieEditTextDuration.setText("");
+                addMovieEditTextRating.setText("");
+                addMovieImageViewImage.setImageBitmap(null);
             }
         });
     }
@@ -85,13 +95,13 @@ public class AddMovieActivity extends AppCompatActivity {
     private void chooseImage() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
-        startActivityForResult(intent, 15);
+        startActivityForResult(intent, 100);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 15) {
+        if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
                 Uri uri = data.getData();
                 try {
@@ -107,7 +117,14 @@ public class AddMovieActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            chooseImage();
+    }
 
-
+    public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] b = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(b, Base64.DEFAULT);
     }
 }
