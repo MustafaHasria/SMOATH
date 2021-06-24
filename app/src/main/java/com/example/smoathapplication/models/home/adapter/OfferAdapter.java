@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smoathapplication.R;
 import com.example.smoathapplication.models.home.model.MovieModel;
+import com.example.smoathapplication.models.home.model.OfferModel;
 
 import java.util.List;
 
@@ -22,12 +23,14 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapter
 
     //region Variables
     List<MovieModel> offerModelList;
+    OfferAdapterClickListeners offerAdapterClickListeners;
     //endregion
 
     //region Constructor
 
-    public OfferAdapter(List<MovieModel> offerModelList) {
+    public OfferAdapter(List<MovieModel> offerModelList, OfferAdapterClickListeners offerAdapterClickListeners) {
         this.offerModelList = offerModelList;
+        this.offerAdapterClickListeners = offerAdapterClickListeners;
     }
 
     //endregion
@@ -46,6 +49,12 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapter
         offerAdapterViewHolder.offerListItemTextDuration.setText(offerModelList.get(position).getDuration());
         offerAdapterViewHolder.offerListItemTextRating.setText(String.valueOf(offerModelList.get(position).getRating()));
         offerAdapterViewHolder.offerListItemImageViewImage.setImageBitmap(StringToBitMap(offerModelList.get(position).getImage()));
+        offerAdapterViewHolder.offerListItemCardMainContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -70,9 +79,15 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapter
         }
     }
 
+    //region Interface
+    public interface OfferAdapterClickListeners{
+        void onOfferListItemCardMainContainerLongClickListener(MovieModel movieModel, int position);
+    }
+    //endregion
+
 
     //region View holder
-    class OfferAdapterViewHolder extends RecyclerView.ViewHolder {
+    class OfferAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
 
         //region Components
         CardView offerListItemCardMainContainer;
@@ -91,6 +106,14 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapter
             offerListItemTextDuration = itemView.findViewById(R.id.offer_list_item_text_duration);
             offerListItemTextRating = itemView.findViewById(R.id.offer_list_item_text_rating);
             offerListItemImageViewImage = itemView.findViewById(R.id.offer_list_item_image_view_image);
+
+            offerListItemCardMainContainer.setOnLongClickListener(this);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            offerAdapterClickListeners.onOfferListItemCardMainContainerLongClickListener(offerModelList.get(getAdapterPosition()), getAdapterPosition());
+            return false;
         }
     }
     //endregion
