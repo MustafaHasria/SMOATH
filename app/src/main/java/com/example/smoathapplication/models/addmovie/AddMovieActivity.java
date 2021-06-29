@@ -30,6 +30,8 @@ import java.util.List;
 
 import io.paperdb.Paper;
 
+import static com.example.smoathapplication.util.AppConst.PICK_IMAGE;
+
 public class AddMovieActivity extends AppCompatActivity {
 
     //region Components
@@ -95,13 +97,13 @@ public class AddMovieActivity extends AppCompatActivity {
     private void chooseImage() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
-        startActivityForResult(intent, 100);
+        startActivityForResult(intent, PICK_IMAGE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
+        if (requestCode == PICK_IMAGE) {
             if (resultCode == RESULT_OK) {
                 Uri uri = data.getData();
                 try {
