@@ -14,6 +14,9 @@ public class MovieModel {
 
     //region Constructor
 
+    public MovieModel() {
+    }
+
     public MovieModel(String image, String name, String duration, String category, float rating) {
         this.image = image;
         this.name = name;

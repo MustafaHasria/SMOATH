@@ -1,5 +1,6 @@
 package com.example.smoathapplication.models.home.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -13,9 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.smoathapplication.R;
-import com.example.smoathapplication.models.home.model.MovieModel;
-import com.example.smoathapplication.models.home.model.OfferModel;
+import com.example.smoathapplication.models.home.modelapi.MovieModel;
 
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapter
     //region Variables
     List<MovieModel> offerModelList;
     OfferAdapterClickListeners offerAdapterClickListeners;
+    Context context;
     //endregion
 
     //region Constructor
@@ -39,22 +42,19 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapter
     @Override
     public OfferAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.offer_list_item, viewGroup, false);
+        context = viewGroup.getContext();
         return new OfferAdapterViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull OfferAdapterViewHolder offerAdapterViewHolder, int position) {
+        Glide.with(context).applyDefaultRequestOptions(new RequestOptions()
+                .placeholder(R.drawable.ic_downloading).error(R.drawable.ic_error))
+                .load(offerModelList.get(position).getImage().getMedium())
+                .into(offerAdapterViewHolder.offerListItemImageViewImage);
         offerAdapterViewHolder.offerListItemTextName.setText(offerModelList.get(position).getName());
-        offerAdapterViewHolder.offerListItemTextCategory.setText(offerModelList.get(position).getCategory());
-        offerAdapterViewHolder.offerListItemTextDuration.setText(offerModelList.get(position).getDuration());
-        offerAdapterViewHolder.offerListItemTextRating.setText(String.valueOf(offerModelList.get(position).getRating()));
-        offerAdapterViewHolder.offerListItemImageViewImage.setImageBitmap(StringToBitMap(offerModelList.get(position).getImage()));
-        offerAdapterViewHolder.offerListItemCardMainContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        if (!offerModelList.get(position).getGenres().get(0).equals(""))
+            offerAdapterViewHolder.offerListItemTextCategory.setText(offerModelList.get(position).getGenres().get(0));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapter
         return offerModelList.size();
     }
 
-    public void updateList(List<MovieModel> offerModelList){
+    public void updateList(List<MovieModel> offerModelList) {
         this.offerModelList.clear();
         this.offerModelList = offerModelList;
         notifyDataSetChanged();
@@ -80,14 +80,14 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferAdapter
     }
 
     //region Interface
-    public interface OfferAdapterClickListeners{
+    public interface OfferAdapterClickListeners {
         void onOfferListItemCardMainContainerLongClickListener(MovieModel movieModel, int position);
     }
     //endregion
 
 
     //region View holder
-    class OfferAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
+    class OfferAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 
         //region Components
         CardView offerListItemCardMainContainer;
